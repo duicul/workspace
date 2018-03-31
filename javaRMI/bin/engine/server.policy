@@ -1,0 +1,3 @@
+grant codeBase "file:/home/duicul/workspace/javaRMI/src/" {
+    permission java.security.AllPermission;
+};
