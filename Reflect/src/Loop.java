@@ -65,7 +65,8 @@ public Loop(String path) {
 	System.out.println("Test methods:");
 	
 	for(Method i:c.getDeclaredMethods()){
-		System.out.println("Test "+i.getName());
+		if(Modifier.toString(i.getModifiers())!="private")
+		{System.out.println("Test "+i.getName());
 		try{if(i.getParameterCount()==0)
 		{Object ret=i.invoke(aux, new Object[]{});
 		System.out.println(i.getName()+"()="+ret.getClass().cast(ret));}
@@ -86,7 +87,7 @@ public Loop(String path) {
 	   }
 		catch(Exception e)
 		{System.out.println("Exception "+Modifier.toString(i.getModifiers())+" "+i.getName());}
-		
+		}
 	}
 	
 	
