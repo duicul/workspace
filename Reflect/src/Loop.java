@@ -15,40 +15,50 @@ public Loop(String path) {
     	{//System.out.println("list"+c.getName()+"  "+cls.getName()+" "+c.equals(cls));
     	if(c.getName().equals(cls.getName()))
     		return true;}
-    return false;
-    	
-    }
+    return false;}
+    
+    
     public void run()
 	{URLClassLoader cls;
 	try {
 		File f=new File(path);
 		cls=new URLClassLoader(new URL[] {f.toURI().toURL()});	
 		System.out.println("Scanning...");
+		
 		if(f.isDirectory())
 		for(File i:f.listFiles())
 		{if(i.getName().contains(".class"))
 			{Class<?> aux=cls.loadClass(i.getName().replace(".class", ""));
 			if(!Loop.contain(t, aux))
 			{t.add(cls.loadClass((i.getName().replace(".class", ""))));
+			System.out.println();
 			System.out.println("Added"+i.getPath()+"  "+i+" \n "+i.getAbsolutePath()+"  "+i.getName());
 			Loop.testClass(aux);
-			}}
-		}
+			}
+			}
+        }
 		else System.out.println("Not a directory");
+		
 		System.out.println();
 		cls.close();
 	}
 	catch(Exception e)
 	{e.printStackTrace();}
 	}
+    
+    
     public static void testClass(Class<?> c)
     {Random r=new Random();
-    try {System.out.println(c.getName());
+    
+    try {
+    System.out.println(c.getName());
 	Constructor<?> con=c.getConstructor(new Class<?>[]{});
 	System.out.println(c.getName()+" "+con.getName()+" "+con.getParameterCount());
+	
 	Object aux=con.newInstance(new Object[]{});
 	Method m=c.getMethod("toString");
 	Object o=m.invoke(aux,new Object[]{});
+	
 	System.out.println("Fields");
 	for(Field f:c.getDeclaredFields())
 		System.out.println(f.getName()+" "+f.getModifiers()+" "+f.getType().getName()+" "+f.isAccessible());
@@ -62,12 +72,16 @@ public Loop(String path) {
 			System.out.print(p.getType()+":"+p.getName()+" ");	
 		System.out.println();
 	}
-	System.out.println("Test methods:");
 	
+	
+	System.out.println("Test methods:");
 	for(Method i:c.getDeclaredMethods()){
-		if(Modifier.toString(i.getModifiers())!="private")
+		
+		if(!Modifier.toString(i.getModifiers()).equals("private"))
 		{System.out.println("Test "+i.getName());
-		try{if(i.getParameterCount()==0)
+		try{
+			
+	    if(i.getParameterCount()==0)
 		{Object ret=i.invoke(aux, new Object[]{});
 		System.out.println(i.getName()+"()="+ret.getClass().cast(ret));}
 		
@@ -84,7 +98,8 @@ public Loop(String path) {
 		{int randval1=r.nextInt(1000),randval2=r.nextInt(1000);
 			Object ret=i.invoke(aux, new Object[]{new Integer(randval1),new Integer(randval2)});
 		System.out.println(i.getName()+"("+randval1+","+randval2+")="+ret.getClass().cast(ret));}}
-	   }
+	   
+		}
 		catch(Exception e)
 		{System.out.println("Exception "+Modifier.toString(i.getModifiers())+" "+i.getName());}
 		}
@@ -112,10 +127,6 @@ public Loop(String path) {
 	Object aux=con.newInstance(new Object[]{});
 	Method m=c.getMethod("toString");
 	Object o=m.invoke(aux,new Object[]{});
-	/*for(Method i:c.getMethods()){
-		for(Parameter p:i.getParameters())
-			System.out.print(p.getName());
-		System.out.println("  "+i.getName()+" "+i.getParameterCount());}*/
 	if(o.getClass().hashCode()==String.class.hashCode())
 		System.out.println("toString "+(String)o);
 	Method proc=c.getMethod("process",new Class<?>[]{int.class});

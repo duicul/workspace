@@ -8,9 +8,11 @@ public interface DBManageinter extends Remote {
     public List<Farmacie> getFarmacii() throws RemoteException;
     public Farmacie getFarmacieId(int FID) throws RemoteException;
     public Farmacie getFarmacieNume(String nume) throws RemoteException;
-    public Stoc getStocID(int SID) throws RemoteException;
+    public Med_Farmacie getStocID(int SID) throws RemoteException;
     public String getHost() throws RemoteException;
-    public Produs getProductID(int PID) throws RemoteException;
-    public Produs getProductName(String name) throws RemoteException;
-    public Produs getProductClass(String clasa) throws RemoteException;
+    public Medicament getMedicamentID(int PID) throws RemoteException;
+    public Medicament getMedicamentName(String name) throws RemoteException;
+    public Farmacist getFarmacist(int id_farmacist) throws RemoteException;
+    public Farmacist getFarmacist(Farmacie farmacie) throws RemoteException;
+    public Farmacist getFarmacist(String farmacist) throws RemoteException;
 }
