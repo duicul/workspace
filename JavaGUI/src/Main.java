@@ -3,6 +3,8 @@ import java.util.List;
 import classes.*;
 import interfaces.*;
 import interfacesch.*;
+
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 
 public class Main {
 	public  double total=0;
@@ -27,6 +30,7 @@ public class Main {
 	private JTextField farmacist_name=new JTextField(15);
 	private JPasswordField farmacist_pass=new JPasswordField(15);
 	private JPanel jpl=new JPanel();
+	private JScrollPane jsp=new JScrollPane(jpl);
 	private JTextField search_field=new JTextField(20);
 	public DBManageinter db;
 	public Farmacieinter fi;
@@ -90,10 +94,11 @@ public class Main {
     	bought=true;
     if(!bought)
     {JPanel aux=new JPanel();
-    JLabel medname=new JLabel(med.getNume()+" "+med.getPret()+" "+m.mi.getMed_Farm(med.getID(), m.farmacie.getID()).getCantitate());
+    Med_Farmacie mf=m.mi.getMed_Farm(med.getID(), m.farmacie.getID());
+    JLabel medname=new JLabel(med.getNume()+" "+med.getPret()+" "+mf.getCantitate());
     JTextField quant=new JTextField(5);
     JButton but=new JButton("+");
-    but.addActionListener(new TotalChange(m,med,"-",quant));
+    but.addActionListener(new TotalChange(m,med,"-",quant,mf));
     aux.add(medname);
     aux.add(quant);
     aux.add(but);
@@ -103,7 +108,8 @@ public class Main {
     catch(Exception e)
     {e.printStackTrace();}
 	//search_field.setText("");
-	jpl.setLayout(new GridLayout(found,1));
+	jpl.setLayout(new GridLayout(found+1,1));
+	jpl.setMinimumSize(new Dimension(100,100));
 	jpl.revalidate();
 	jpl.repaint();
 	m.frame.pack();}
