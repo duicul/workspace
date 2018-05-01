@@ -24,10 +24,10 @@ public class TotalChange implements ActionListener {
 		try{System.out.println(this.quantity.getText());
 			int quant=Integer.parseInt(quantity.getText());
 			if(op=="-")
-			{if(main.total<=quant*m.getPret())
+			{if(main.total>=quant*m.getPret())
 				JOptionPane.showMessageDialog(main.frame,"Not enough products","Alert", JOptionPane.ERROR_MESSAGE);
 			else
-			{main.total+=quant*m.getPret();
+			{main.total-=quant*m.getPret();
 			main.sp.add(new SoldProduct(m,Integer.parseInt(quantity.getText())));
 			}}
 		if(op=="+")
