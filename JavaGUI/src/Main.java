@@ -86,7 +86,7 @@ public class Main {
 	jpl.setLayout(new GridLayout(ml.size(),1));
     //System.out.println(m.farmacie.getNume()+" search "+ml.size()+" "+search_field.getText());
 	for(Medicament med:ml)
-    {//System.out.println("medicament: "+med.getNume());
+    {System.out.println("medicament: "+med.getNume());
 	if((med.getNume().matches("(.*)"+search_field.getText()+"(.*)"))||search_field.getText().equals(med.getID()))
     {boolean bought=false;
     	for(SoldProduct slp:m.sp)
@@ -95,6 +95,7 @@ public class Main {
     if(!bought)
     {JPanel aux=new JPanel();
     Med_Farmacie mf=m.mi.getMed_Farm(med.getID(), m.farmacie.getID());
+    System.out.println(mf==null);
     JLabel medname=new JLabel(med.getNume()+" "+med.getPret()+" "+mf.getCantitate());
     JTextField quant=new JTextField(5);
     JButton but=new JButton("+");

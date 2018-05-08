@@ -1,6 +1,7 @@
 import java.lang.reflect.UndeclaredThrowableException;
 
 import brokerlib.Naming;
+import info.Info;
 
 public class Client {
 
@@ -12,13 +13,12 @@ public class Client {
 	  System.out.println(o.getClass().getName());
 	  
 	try{Naming r=Naming.registry("localhost");
-	Some m=(Some) r.getStub("test");
-	System.out.println("result: "+m.add(10, 3));
-	System.out.println("result "+m.add((float)10.3,(float)12.1));
-	System.out.println("result "+m.sayhello("Mark"));
-	/*System.out.println("result: "+m.add(9, 5));
-	System.out.println("result: "+m.add(8, 7));
-	System.out.println("result: "+m.add(7, 9));*/
+	Info i=(Info) r.getStub("info");
+	math.Math m =(math.Math) r.getStub("math");
+	System.out.println("\n"+i.get_temp("Timisoara")+"\n");
+	System.out.println("\n"+i.getroad_info(45)+"\n");
+	System.out.println("\n"+m.do_add((float)12.7, (float)11.3)+"\n");
+	System.out.println("\n"+m.do_sqrt((float)64)+"\n");
 	}
 	catch (UndeclaredThrowableException ute) {
 		  try {
